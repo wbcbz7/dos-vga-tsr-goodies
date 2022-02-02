@@ -37,3 +37,9 @@ Resets VGA RAMDAC Write/Read Index to 0 and Mask register (0x3C6) to 0xFF after 
 
 
 -- wbcbz7 02.02.2022
+
+
+
+
+
+P.S. by the way, I'm often hanging out in Sizecoding Discord Server, join us at https://discord.gg/5yUQmHJgfV :)
