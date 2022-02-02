@@ -1,0 +1,39 @@
+ KEENFIX.COM - VGA mode 0xD retrace\color fix v0.3 by wbc\\b-state 15.o5.2o16
+
+ DISCLAIMER:
+
+ ---------------------------------------------------------------------------
+
+                      YOU ARE USING IT AT OWN RISK!
+
+ This TSR sets NON-STANDARD CRTC parameters, BUT I will not response for
+ possible monitor\VGA adapter damage or malfunction, so...go ahead :)
+
+ ---------------------------------------------------------------------------
+
+ Yep, this is the latest version of KEENFIX, pretty large but with some PSP
+ tricks and code optimization it takes only 128 bytes(!) in memory and it
+ can work either in border or noborder modes, so try it NOW! :)
+
+ - run "KEENFIX.COM" to install with border, run it with "/B-" key to disable
+   top\bottom\right border in order to fix monitor adjustment issues.
+ - you can release it by using "/U" or "/R" keys if no other TSRs which hooks
+   INT10h are loaded after.
+ - after loading, you can reset border\noborder state of TSR in any moment,
+   just run KEENFIX with "/B+" (border) or "/B-" (noborder) key
+ - you can omit the "/" symbol or replace it with dash ("-"), also keys are
+   case-insensitive.
+ - "/U" and "/R" keys can be written as "/UNLOAD" or "/RELEASE" or with any
+   word starting with U or R, they will work just as short versions :)
+
+ example:
+ KEENFIX.COM     - run it with border enabled
+ KEENFIX.COM /B- - reset to disable border
+ KEENFIX.COM /B+ - reset to enable border
+ KEENFIX.COM /UNLOAD_IT_RIGHT_NOW - no comments :)
+
+ That's all :)
+
+ wbcbz7 -> wbc.bz7@gmail.com -> irc://irc.forestnet.org/#z80
+
+ 
