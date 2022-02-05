@@ -8,6 +8,7 @@
 ; v 0.2 - added option to hook INT08 and check for mode change every IRQ0
 ;         timer tick - ideal for oddball apps changing VGA registers after
 ;         mode set (like some Mode-X applications)
+; v 0.3 - add CRTC index restore
 
 ; --wbcbz7 ob.oz.zozz
 
@@ -55,6 +56,9 @@ newint10:
 
                 ; test for vertical total = 449
                 mov     dx, 0x3D4
+                in      al, dx
+                mov     ah, al                  ; save old index!
+                
                 mov     al, 6
                 out     dx, al
                 inc     dx
@@ -88,7 +92,12 @@ newint10:
                 mov     dl, 0xC2
                 out     dx, al                  ; misc. output
                 
-.exit:
+.exit:  
+                ; restore old CRTC index!
+                mov     dl, 0xD4
+                mov     al, ah
+                out     dx, al
+                
                 pop     dx
                 pop     ax
                 iret
@@ -97,13 +106,13 @@ newint10end:
 
                 ; INT08 handler for evil applications changing VGA registers
                 ; after mode set (like some Mode-X applications)
-                ; NB: assumes chain handler acknowledging interrupt 
 newint08:
                 pushf
-                db      0x9A    ; call dword ?:?
+                push    cs
+                call    newint10.boost
+                db      0xEA    ; jmp dword ?:?
 .int08ofs       dw  ?
 .int08seg       dw  ?
-                jmp     newint10.boost
                 
 newint08end:
 
@@ -317,7 +326,7 @@ install:
 ;----
 
                 
-info_str        db      "VGA 320x200/640x400 modes LCD tweak -- wbcbz7 -- o3.o2.2o22 - $"
+info_str        db      "VGA 320x200/640x400 modes LCD tweak -- wbcbz7 -- ob.oz.zozz - $"
 already_str     db      "already $"
 installed_str   db      "installed$"
 released_str    db      "released$"
