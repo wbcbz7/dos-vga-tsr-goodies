@@ -9,6 +9,7 @@
 ;         timer tick - ideal for oddball apps changing VGA registers after
 ;         mode set (like some Mode-X applications)
 ; v 0.3 - add CRTC index restore
+; v 0.4 - add 360/720 by 200/400 graphics mode support, sequencer index restore
 
 ; --wbcbz7 ob.oz.zozz
 
@@ -57,7 +58,7 @@ newint10:
                 ; test for vertical total = 449
                 mov     dx, 0x3D4
                 in      al, dx
-                mov     ah, al                  ; save old index!
+                push    ax
                 
                 mov     al, 6
                 out     dx, al
@@ -75,14 +76,31 @@ newint10:
                 cmp     al, ((vertical_total and 0x100) shr 8) or ((vertical_total and 0x200) shr 4)
                 jnz     .exit
 
+                ; optional test for horizontal total > 0x68 (360/720 by 200/400 graphics mode or 132-line textmode)
+                dec     dx
+                xor     al, al
+                out     dx, al
+                inc     dx
+                in      al, dx
+                cmp     al, 0x68
+                jae     .exit
+                
                 ; test for 8 pixels/char
                 mov     dl, 0xC4
+                in      al, dx 
+                mov     ah, al
+                
                 mov     al, 1
                 out     dx, al
                 inc     dx
                 in      al, dx
-                test    al, 1
-                jz      .exit   ; set if 8 pixels/char, clear if 9
+                dec     dx
+                test    al, 1  ; 1 if 8 pixels/char, 0 if 9
+                
+                ; restore sequencer index
+                mov     al, ah
+                out     dx, al
+                jz      .exit 
                 
                 ; set negative verical/positive horizontal polarity for 350 lines detection
                 mov     dl, 0xCC
@@ -93,9 +111,10 @@ newint10:
                 out     dx, al                  ; misc. output
                 
 .exit:  
+
                 ; restore old CRTC index!
                 mov     dl, 0xD4
-                mov     al, ah
+                pop     ax
                 out     dx, al
                 
                 pop     dx
