@@ -30,7 +30,7 @@ Fix issues with 15bit per pixel (RGB555) VESA modes incorrectly reported as 16 b
 
 Force 60 Hz refresh rate and 4:3 letterboxed aspect ratio for certain VGA modes like mode 0x13 (320x200 256 color)
 
-### LCD60HZ
+### LCD640
 
 VGA 400-lines mode tweak and LCD "fix". Sets negative vertical/positive horizontal polarity for 350 lines detection if 320/640 by 200/400 line mode requested, tricking some LCD displays in detecting mode as 640x350/400 instead of 720x400, improving pixel clarity.
 
