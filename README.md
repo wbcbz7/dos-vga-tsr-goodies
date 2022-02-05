@@ -30,6 +30,12 @@ Fix issues with 15bit per pixel (RGB555) VESA modes incorrectly reported as 16 b
 
 Force 60 Hz refresh rate and 4:3 letterboxed aspect ratio for certain VGA modes like mode 0x13 (320x200 256 color)
 
+### LCD60HZ
+
+VGA 400-lines mode tweak and LCD "fix". Sets negative vertical/positive horizontal polarity for 350 lines detection if 320/640 by 200/400 line mode requested, tricking some LCD displays in detecting mode as 640x350/400 instead of 720x400, improving pixel clarity.
+
+Would be useful in combination with OSSC if 640/720-pixel mode detection for AV3 RGBHV input implemented, which is not the case today :)
+
 ### DACFIX
 
 Resets VGA RAMDAC Write/Read Index to 0 and Mask register (0x3C6) to 0xFF after each mode set; purpose unknown (as it also unlocks CRTC registers 0-7), sources were also lost.
