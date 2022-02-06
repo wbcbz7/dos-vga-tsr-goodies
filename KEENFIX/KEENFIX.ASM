@@ -1,11 +1,13 @@
-; KEENFIX.ASM - VGA mode 0xD retrace\LCD color corruption fix TSR v.0.3
+; KEENFIX.ASM - VGA mode 0xD retrace\LCD color corruption fix TSR v.0.4
 ; mainly for Commander Keen series games :)
-; coded in about one hour by Artem Vasilev - wbc \\ b-state 16.o5.2o16
+; coded in about one hour by Artem Vasilev - wbcbz7 16.o5.16 - o7.o2.22
 ; tested with Matrox Millennium, maybe works with other Matrox cards
 ; also Voodoo Banshee\3\4\5 and Intel i740 users - try it! :)
 
 ; USE AT OWN RISK - UTILIZES NON-STANDARD CRTC PARAMETERS!!1!
-; currently still have some issues with Catacomb 3D (screen shifts up)
+;
+; v.0.4 - restore CRTC lock status - Catacomb 3D finally works now
+;         fix noborder register values, leaving 1px top (thanks nvidia)
 
 ; use FASM to compile
 
@@ -31,12 +33,14 @@ newint10:
 int10ofs        dw  ?
 int10seg        dw  ?
 boost:                                        
-                pusha
-                mov     dx, 3D4h
+                push    ax
+                push    dx
+                mov     dx, 3D4h    
                 mov     al, 11h
                 out     dx, al
                 inc     dx
                 in      al, dx
+                push    ax
                 and     al, 7Fh
                 out     dx, al                ; unlock cr0 - cr7
                 dec     dx
@@ -50,12 +54,19 @@ boost:
 patch_dst:
                 mov     ax, 02702h           ; horizontal blank start
                 out     dx, ax
-                mov     ax, 08E15h           ; vertical   blank start
+                mov     ax, 08F15h           ; vertical   blank start
                 out     dx, ax
-                mov     ax, 0C016h           ; vertical   blank end
+                mov     ax, 0BF16h           ; vertical   blank end
                 out     dx, ax
-patch_src:                
-                popa
+patch_src:      
+                ; restore CRTC lock status
+                pop     ax
+                mov     ah, al
+                mov     al, 0x11
+                out     dx, ax
+                
+                pop     dx
+                pop     ax
                 iret
        
 newint10end:
@@ -138,7 +149,7 @@ installed:
                 mov     dx, dash_str
                 int     21h
                 call    patch
-                jmp      done
+                jmp     done
                 
 already:        mov     dx, already_str
                 int     21h
@@ -204,8 +215,9 @@ patch:
                 mov     dx, border_str
 @do_patch:              
                 ; patch to noborder version
+                mov     cx, (newint10end - patch_dst)
                 mov     di, patch_dst
-                movsw                       ; do the patch
+                rep     movsb                       ; do the patch
                 
                 int     21h
                 ret

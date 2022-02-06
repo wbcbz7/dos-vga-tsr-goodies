@@ -1,4 +1,4 @@
- KEENFIX.COM - VGA mode 0xD retrace\color fix v0.3 by wbc\\b-state 15.o5.2o16
+ KEENFIX.COM - VGA mode 0xD retrace\color fix v0.4 - wbcbz7 - 2015-2022
 
  DISCLAIMER:
 
@@ -12,8 +12,8 @@
  ---------------------------------------------------------------------------
 
  Yep, this is the latest version of KEENFIX, pretty large but with some PSP
- tricks and code optimization it takes only 128 bytes(!) in memory and it
- can work either in border or noborder modes, so try it NOW! :)
+ tricks and code optimization it takes only 128 bytes(!) (note: 0.4 bumped it
+ back to 160) in memory and it can work either in border or noborder modes
 
  - run "KEENFIX.COM" to install with border, run it with "/B-" key to disable
    top\bottom\right border in order to fix monitor adjustment issues.
@@ -34,6 +34,12 @@
 
  That's all :)
 
- wbcbz7 -> wbc.bz7@gmail.com -> irc://irc.forestnet.org/#z80
+ changelog:
+  v.0.4 - restore CRTC lock status - Catacomb 3D finally works now
+          fix noborder register values, leaving 1px top ("thanks" nvidia)
+
+  v.0.1 - 0.3 - can't remember now, check vogons threads :)
+
+ wbcbz7 -> wbcbz7.at@gmail.com -> t.me/wbcbz7 -> github.com/wbcbz7
 
  
