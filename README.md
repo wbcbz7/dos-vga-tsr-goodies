@@ -14,8 +14,6 @@ Note 2: almost all TSRs are following the common command line switches concept. 
 
 A VGA mode 0xD (320x200 16 color) CRTC retrace fix, primarily made for fixing color tint issues in Commander Keen series games on Matrox graphics cards and certain LCD monitors. Also includes option to completely remove all (but left - I gave up :) borders for fixing display adjustment issues.
 
-still have some bugs with Catacomb 3D, might have to fix it in future :)
-
 ### CLMCLK
 
 Cirrus Logic CL-GD5420-5429 memory clock utility. Similar to MCLK/CIRMCLK but works around a quirk in GD542x Video BIOS, which resets memory clock to default every mode set (hence the TSR nature :)
