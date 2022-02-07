@@ -94,10 +94,10 @@ parse:
                 ; parse command line
                 mov     si, 80h
                 lodsb
-                or      al, al
+                and     ax, 0x00FF            ; clear AH + test for AL==00
                 jz      no_params             ; empty commandline
                 
-                movzx   cx, al
+                mov     cx, ax
 @parse_loop:
                 lodsb
                 cmp     al, "?"               ; help
