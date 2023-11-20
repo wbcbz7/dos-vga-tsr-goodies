@@ -38,9 +38,25 @@ Would be useful in combination with OSSC if 640/720-pixel mode detection for AV3
 
 Resets VGA RAMDAC Write/Read Index to 0 and Mask register (0x3C6) to 0xFF after each mode set; purpose unknown (as it also unlocks CRTC registers 0-7), sources were also lost.
 
+### TFIFO
+
+Enable FIFO on Trident TVGA8900CL/D/9000C chips, improving performance in VGA and VESA modes
+
+### SDSNOVS
+
+Force VSync off for VESA Set Display Start functions, useful for ATi Rage128/Radeon and Build Engine games (Duke3D, Blood, etc). As a side effect, disables VBE 2.0 Protected Mode services, which can help with some troublesome VESA BIOS implementations.
+
+### NV15BPP
+
+Flips all 16bpp (RGB565) VESA modes to 15bpp (RGB555) on NVidia Riva TNT-GeForce 7xxx. Obsolete, use UniVBE 6.53 + [NVPatch](https://github.com/wbcbz7/nvpatch-dos) instead.
+
+### NOEMS
+
+Disables EMS driver detection and optionally disables VCPI support. Not very useful, since most V86-unfriendly applications test for MSW bit 0 instead :)
 
 
--- wbcbz7 02.02.2022
+
+-- wbcbz7 20.11.2023
 
 
 

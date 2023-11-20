@@ -76,7 +76,7 @@ newint10:
                 cmp     al, ((vertical_total and 0x100) shr 8) or ((vertical_total and 0x200) shr 4)
                 jnz     .exit
 
-                ; optional test for horizontal total > 0x68 (360/720 by 200/400 graphics mode or 132-line textmode)
+                ; optional test for horizontal total > 0x68 (360/720 by 200/400 graphics mode or 132-char textmode)
                 dec     dx
                 xor     al, al
                 out     dx, al
